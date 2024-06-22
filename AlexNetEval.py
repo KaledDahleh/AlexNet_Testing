@@ -13,8 +13,6 @@ imageTransformations = models.AlexNet_Weights.IMAGENET1K_V1.transforms()
 
 imageFolderPath = "/Users/kaleddahleh/Downloads/test"
 
-model1.eval()
-
 with torch.inference_mode():
     listOfImageNames = os.listdir(imageFolderPath) # get the list of all image names
     for imageName in listOfImageNames:
@@ -26,7 +24,7 @@ with torch.inference_mode():
         image = image.to(device)
 
         prediction = model1(image) # forward pass
-        
-        print(prediction)
+
+        print(prediction) # data is still raw
 
     
