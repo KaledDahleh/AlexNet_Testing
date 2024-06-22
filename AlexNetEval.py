@@ -40,4 +40,4 @@ with torch.inference_mode():
 
         topProb, correspondingClass = torch.max(probabilities, dim = 0) # retrieve the highest probability score and its class
 
-        print(f'{listOfClassNames[correspondingClass.item()]}\nprobability: {topProb*100}%\nfilename: {imageName}\n-----')
+        print(f'-----\n{listOfClassNames[correspondingClass.item()]}\nprobability: {topProb*100}%\nfilename: {imageName}')
