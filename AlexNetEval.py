@@ -20,13 +20,16 @@ with torch.inference_mode():
         imagePath = f'{imageFolderPath}/{imageName}' # combine the folder path and image name to get the image path
         # prepare the image for testing, these are AlexNet's documentation rules
         image = Image.open(imagePath) # open the image
+        
+        if image.mode == 'L':  # convert black and white to rgb
+            image = image.convert("RGB")
+
         image = imageTransformations(image) # transform image to fit AlexNet testing documentation
         image = image.unsqueeze(0) # add an additional layer to the image tensor, batch size, because this is what ImageNet expects [N, C, H, W]
         image = image.to(device)
 
         prediction = model1(image) # forward pass
 
-        probabilities = nn.functional.softmax(prediction[0], dim = 0)
+        probabilities = nn.functional.softmax(prediction[0], dim = 0) # softmax is a math operation that converts raw predictions to probabilities
 
-        print(probabilities)
-    
+        topProb, correspondingClass = torch.max(probabilities, dim = 0) # retrieve the highest probability score and its class
