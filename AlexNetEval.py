@@ -6,9 +6,9 @@ import torch.nn as nn
 
 # convert labels file to a list
 openFile = open("labels.txt")
-readr = openFile.readlines()
-for i in range(len(readr)):
-    readr[i] = readr[i].strip("\n")
+listOfClassNames = openFile.readlines()
+for i in range(len(listOfClassNames)):
+    listOfClassNames[i] = listOfClassNames[i].strip("\n")
 
 # bring in alexnet model with pretrained weights and biasesl; we're not looking to train the model
 model1 = models.alexnet(pretrained=True)
@@ -39,3 +39,5 @@ with torch.inference_mode():
         probabilities = nn.functional.softmax(prediction[0], dim = 0) # softmax is a math operation that converts raw predictions to probabilities
 
         topProb, correspondingClass = torch.max(probabilities, dim = 0) # retrieve the highest probability score and its class
+
+        print(f'{listOfClassNames[correspondingClass.item()]}\nprobability: {topProb*100}%\nfilename: {imageName}\n-----')
