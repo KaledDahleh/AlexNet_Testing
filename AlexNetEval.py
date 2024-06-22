@@ -4,6 +4,12 @@ from PIL import Image
 import os # interact with the os, in our case, specifically files
 import torch.nn as nn
 
+# convert labels file to a list
+openFile = open("labels.txt")
+readr = openFile.readlines()
+for i in range(len(readr)):
+    readr[i] = readr[i].strip("\n")
+
 # bring in alexnet model with pretrained weights and biasesl; we're not looking to train the model
 model1 = models.alexnet(pretrained=True)
 device = "cuda" if torch.cuda.is_available() else "cpu"
