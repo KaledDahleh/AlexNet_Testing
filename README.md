@@ -5,3 +5,5 @@
 ### DEPENDENCIES
 
     - pip install torch torchvision
+
+    - ImageNet dataset --> found on ImageNet website, requires login to access dataset
