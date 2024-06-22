@@ -2,6 +2,7 @@ import torch
 import torchvision.models as models
 from PIL import Image
 import os # interact with the os, in our case, specifically files
+import torch.nn as nn
 
 # bring in alexnet model with pretrained weights and biasesl; we're not looking to train the model
 model1 = models.alexnet(pretrained=True)
@@ -25,6 +26,7 @@ with torch.inference_mode():
 
         prediction = model1(image) # forward pass
 
-        print(prediction) # data is still raw
+        probabilities = nn.functional.softmax(prediction[0], dim = 0)
 
+        print(probabilities)
     
