@@ -4,6 +4,6 @@
 
 ### DEPENDENCIES
 
-    - pip install torch torchvision
+    - pip install torch torchvision pillow
 
     - ImageNet dataset --> found on ImageNet website, requires login to access dataset
