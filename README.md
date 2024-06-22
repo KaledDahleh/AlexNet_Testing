@@ -6,6 +6,8 @@
 
 ### DEPENDENCIES
 
+    - ImageNet object detection test data set can be downloaded from [this](https://www.image-net.org/challenges/LSVRC/2017/2017-downloads.php) link, once logged in
+
     - pip install torch torchvision pillow
 
     - ImageNet dataset --> found on ImageNet website, requires login to access dataset
