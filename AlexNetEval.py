@@ -3,6 +3,14 @@ import torchvision.models as models
 from PIL import Image
 import os # interact with the os, in our case, specifically files
 import torch.nn as nn
+import json
+
+# Path to your file
+classIndexPath = "/Users/kaleddahleh/Desktop/workspace/repos/AlexNet_Testing/imagenet_class_index.json"
+
+# Open and read the file
+with open(classIndexPath, 'r') as file:
+    dictionaryOfClasses = json.load(file)
 
 # convert labels file to a list
 openFile = open("classes.txt")
@@ -19,6 +27,10 @@ model1.to(device)
 imageTransformations = models.AlexNet_Weights.IMAGENET1K_V1.transforms()
 
 imageFolderPath = "/Users/kaleddahleh/Downloads/ImageNet_Validation_Set"
+
+openp = open(classIndexPath)
+
+rd = openp.readlines()
 
 with torch.inference_mode():
     listOfImageNames = os.listdir(imageFolderPath) # get the list of all image names
@@ -41,4 +53,13 @@ with torch.inference_mode():
 
         topProb, correspondingClass = torch.max(probabilities, dim = 0) # retrieve the highest probability score and its class
 
-        print(f'-----\n{listOfClassNames[correspondingClass.item()]}\nprobability: {topProb*100}%\nfilename: {imageName}')
+        predictedLabel = listOfClassNames[correspondingClass.item()]
+
+        print(f'-----\n{predictedLabel}\nprobability: {topProb*100}%\nfilename: {imageName}')
+
+        correctLabel = dictionaryOfClasses[str(correspondingClass.item())][1]
+
+        if correctLabel == predictedLabel:
+            print("CORRECT")
+        else:
+            print("NOT CORRECT")
