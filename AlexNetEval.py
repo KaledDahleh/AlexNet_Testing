@@ -5,7 +5,7 @@ import os # interact with the os, in our case, specifically files
 import torch.nn as nn
 
 # convert labels file to a list
-openFile = open("labels.txt")
+openFile = open("classes.txt")
 listOfClassNames = openFile.readlines()
 for i in range(len(listOfClassNames)):
     listOfClassNames[i] = listOfClassNames[i].strip("\n")
@@ -18,10 +18,11 @@ model1.to(device)
 # this gets all the image prep we need
 imageTransformations = models.AlexNet_Weights.IMAGENET1K_V1.transforms()
 
-imageFolderPath = "/Users/kaleddahleh/Downloads/test"
+imageFolderPath = "/Users/kaleddahleh/Downloads/ImageNet_Validation_Set"
 
 with torch.inference_mode():
     listOfImageNames = os.listdir(imageFolderPath) # get the list of all image names
+    listOfImageNames.sort()
     for imageName in listOfImageNames:
         imagePath = f'{imageFolderPath}/{imageName}' # combine the folder path and image name to get the image path
         # prepare the image for testing, these are AlexNet's documentation rules
