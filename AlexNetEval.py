@@ -28,7 +28,7 @@ listOfImageNames = os.listdir(imageFolderPath) # get the list of all image names
 listOfImageNames.sort()
 # ---------------------------------------------------------------------------------------------------------------------------------------
 # -------- Prepare bounding box annotations to identify each image's correct ID ---------------------------------------------------------------------------------------
-Bounding_Box_Annotation_Folder_Path = "/Users/kaleddahleh/Desktop/workspace/repos/AlexNet_Testing/val"
+Bounding_Box_Annotation_Folder_Path = "/Users/kaleddahleh/Downloads/val"
 Bounding_Box_Annotation_Folder = os.listdir(Bounding_Box_Annotation_Folder_Path)
 Bounding_Box_Annotation_Folder.sort()
 # ---------------------------------------------------------------------------------------------------------------------------------------
@@ -55,7 +55,7 @@ with torch.inference_mode():
         predictedLabel = dictionaryOfClasses[str(correspondingClass.item())][1] # go from class number to label
         # ---------------------------------------------------------------------------------------------
         # ---------- Retrieve the correct image label ---------------------------------------
-        Validation_Images_Folder_Path = f'/Users/kaleddahleh/Desktop/workspace/repos/AlexNet_Testing/val/{Bounding_Box_Annotation_Folder[imageNum]}'
+        Validation_Images_Folder_Path = f'{Bounding_Box_Annotation_Folder_Path}/{Bounding_Box_Annotation_Folder[imageNum]}'
         openFile = open(Validation_Images_Folder_Path)
         listOfImageAttributes = openFile.readlines()
         imageID = listOfImageAttributes[13][8:17]
