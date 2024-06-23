@@ -32,6 +32,10 @@ openp = open(classIndexPath)
 
 rd = openp.readlines()
 
+correct = 0
+incorrect = 0
+total = 50000
+
 with torch.inference_mode():
     listOfImageNames = os.listdir(imageFolderPath) # get the list of all image names
     listOfImageNames.sort()
@@ -61,5 +65,14 @@ with torch.inference_mode():
 
         if correctLabel == predictedLabel:
             print("CORRECT")
+            correct+=1
         else:
             print("NOT CORRECT")
+            incorrect+=1
+
+        print(f'{correct} correct, {incorrect} incorrect')
+
+    print(correct)
+    print(incorrect)
+    print(total)
+    accuracy = f'{100*(correct/total)}%'
