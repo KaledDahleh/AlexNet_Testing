@@ -35,4 +35,4 @@ This project uses the pretrained AlexNet model to classify images from the Image
 
 ## Running the Script
 
-    python AlexNetEval.py
+    python3 AlexNetEval.py
