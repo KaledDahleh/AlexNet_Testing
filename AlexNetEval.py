@@ -5,25 +5,13 @@ import os
 import torch.nn as nn
 import json
 
-
 classIndexPath = "/Users/kaleddahleh/Desktop/workspace/repos/AlexNet_Testing/imagenet_class_index.json" # this is the map of the 1000 class indices and their corresponding ID and label
 with open(classIndexPath, 'r') as file:
     dictionaryOfClasses = json.load(file)
-
 codesAndLabels = list(dictionaryOfClasses.values())
-
 newdict = {}
-
 for codeAndLabel in codesAndLabels:
     newdict[codeAndLabel[0]]=codeAndLabel[1]
-
-print(newdict)
-
-# convert labels file to a list
-openFile = open("classes.txt")
-listOfClassNames = openFile.readlines()
-for i in range(len(listOfClassNames)):
-    listOfClassNames[i] = listOfClassNames[i].strip("\n")
 
 # bring in alexnet model with pretrained weights and biasesl; we're not looking to train the model
 model1 = models.alexnet(pretrained=True)
