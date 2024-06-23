@@ -6,7 +6,7 @@ import torch.nn as nn
 import json
 # ---------------------------------------------------------------------------------------------------------------------------------------
 # -------------------- convert json map of classes into a python dictionary ----------------------------------------
-classIndexPath = "/Users/kaleddahleh/Desktop/workspace/repos/AlexNet_Testing/imagenet_class_index.json" # this is the map of the 1000 class indices and their corresponding ID and label
+classIndexPath = "/Users/kaleddahleh/Desktop/workspace/repos/AlexNet_Testing/ImageNet_Class_Map.json" # this is the map of the 1000 class indices and their corresponding ID and label
 with open(classIndexPath, 'r') as file:
     dictionaryOfClasses = json.load(file)
 codesAndLabels = list(dictionaryOfClasses.values())
@@ -21,21 +21,23 @@ model1.to(device)
 # ---------------------------------------------------------------------------------------------------------------------------------------
 # -------------------- this is a special pytorch class that adjusts images so they fit AlexNet criteria --------------------
 imageTransformations = models.AlexNet_Weights.IMAGENET1K_V1.transforms()
-imageFolderPath = "/Users/kaleddahleh/Downloads/ImageNet_Validation_Set"
 # ---------------------------------------------------------------------------------------------------------------------------------------
 # -------------------- Load list of 50k AlexNet validation images from file path -----------------
+imageFolderPath = "/Users/kaleddahleh/Downloads/ImageNet_Validation_Set"
 listOfImageNames = os.listdir(imageFolderPath) # get the list of all image names
 listOfImageNames.sort()
-listOfCorrectLabelFiles = os.listdir("/Users/kaleddahleh/Desktop/workspace/repos/AlexNet_Testing/val")
-# /Users/kaleddahleh/Desktop/workspace/repos/AlexNet_Testing/val/ILSVRC2012_val_00000001.xml
-listOfCorrectLabelFiles.sort()
+# ---------------------------------------------------------------------------------------------------------------------------------------
+# -------- Prepare bounding box annotations to identify each image's correct ID ---------------------------------------------------------------------------------------
+Bounding_Box_Annotation_Folder_Path = "/Users/kaleddahleh/Desktop/workspace/repos/AlexNet_Testing/val"
+Bounding_Box_Annotation_Folder = os.listdir(Bounding_Box_Annotation_Folder_Path)
+Bounding_Box_Annotation_Folder.sort()
 # ---------------------------------------------------------------------------------------------------------------------------------------
 with torch.inference_mode():
     # -------------------- initialize values -----------------
     successfullyPredictedImages = 0
     unsuccessfullyPredictedImages = 0
     imageNum = 0 # index for the image we are currently testing
-    #  -------------------------------------------------------------
+    # -------------------------------------------------------------
     for imageName in listOfImageNames:
         imagePath = f'{imageFolderPath}/{imageName}'
         # -------- prepare the image for testing, these are AlexNet's documentation rules -------------
@@ -53,8 +55,8 @@ with torch.inference_mode():
         predictedLabel = dictionaryOfClasses[str(correspondingClass.item())][1] # go from class number to label
         # ---------------------------------------------------------------------------------------------
         # ---------- Retrieve the correct image label ---------------------------------------
-        boundingBoxAnnotationsPath = f'/Users/kaleddahleh/Desktop/workspace/repos/AlexNet_Testing/val/{listOfCorrectLabelFiles[imageNum]}'
-        openFile = open(boundingBoxAnnotationsPath)
+        Validation_Images_Folder_Path = f'/Users/kaleddahleh/Desktop/workspace/repos/AlexNet_Testing/val/{Bounding_Box_Annotation_Folder[imageNum]}'
+        openFile = open(Validation_Images_Folder_Path)
         listOfImageAttributes = openFile.readlines()
         imageID = listOfImageAttributes[13][8:17]
         correctLabel = newdict[imageID]
