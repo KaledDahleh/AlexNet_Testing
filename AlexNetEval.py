@@ -4,7 +4,6 @@ from PIL import Image
 import os
 import torch.nn as nn
 import json
-
 # ---------------------------------------------------------------------------------------------------------------------------------------
 # -------------------- convert json map of classes into a python dictionary ----------------------------------------
 classIndexPath = "/Users/kaleddahleh/Desktop/workspace/repos/AlexNet_Testing/imagenet_class_index.json" # this is the map of the 1000 class indices and their corresponding ID and label
@@ -24,24 +23,21 @@ model1.to(device)
 imageTransformations = models.AlexNet_Weights.IMAGENET1K_V1.transforms()
 imageFolderPath = "/Users/kaleddahleh/Downloads/ImageNet_Validation_Set"
 # ---------------------------------------------------------------------------------------------------------------------------------------
-# -------------------- Prepare list of 50k AlexNet validation images from file path -----------------
+# -------------------- Load list of 50k AlexNet validation images from file path -----------------
 listOfImageNames = os.listdir(imageFolderPath) # get the list of all image names
 listOfImageNames.sort()
 listOfCorrectLabelFiles = os.listdir("/Users/kaleddahleh/Desktop/workspace/repos/AlexNet_Testing/val")
 # /Users/kaleddahleh/Desktop/workspace/repos/AlexNet_Testing/val/ILSVRC2012_val_00000001.xml
 listOfCorrectLabelFiles.sort()
 # ---------------------------------------------------------------------------------------------------------------------------------------
-
 with torch.inference_mode():
     # -------------------- initialize values -----------------
     successfullyPredictedImages = 0
     unsuccessfullyPredictedImages = 0
     imageNum = 0 # index for the image we are currently testing
     #  -------------------------------------------------------------
-
     for imageName in listOfImageNames:
         imagePath = f'{imageFolderPath}/{imageName}'
-
         # -------- prepare the image for testing, these are AlexNet's documentation rules -------------
         image = Image.open(imagePath)
         if image.mode != 'RGB': 
@@ -73,6 +69,5 @@ with torch.inference_mode():
             unsuccessfullyPredictedImages +=1 
         print("----------------------------------------")
         imageNum += 1
-
     print(f'{successfullyPredictedImages} correct\n{unsuccessfullyPredictedImages} incorrect\nAccuracy: {100*successfullyPredictedImages/(successfullyPredictedImages+unsuccessfullyPredictedImages)}%')
     
