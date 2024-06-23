@@ -39,6 +39,7 @@ total = 50000
 with torch.inference_mode():
     listOfImageNames = os.listdir(imageFolderPath) # get the list of all image names
     listOfImageNames.sort()
+    listOfImageNames = listOfImageNames[19874:]
     for imageName in listOfImageNames:
         imagePath = f'{imageFolderPath}/{imageName}' # combine the folder path and image name to get the image path
         # prepare the image for testing, these are AlexNet's documentation rules
@@ -60,8 +61,9 @@ with torch.inference_mode():
         predictedLabel = listOfClassNames[correspondingClass.item()]
         
         correctLabel = dictionaryOfClasses[str(correspondingClass.item())][1]
+        correctLabel = correctLabel.replace("_", " ") # discrepency between labels 
 
-        print(f'-----\n{predictedLabel}\nprobability: {topProb*100}%\nfilename: {imageName}\n correct label {correctLabel}')
+        print(f'-----\ncorrect label:{correctLabel} --> predicted label:{predictedLabel}\nprobability: {topProb*100}%\nfilename: {imageName}')
 
         if correctLabel == predictedLabel:
             print("CORRECT")
