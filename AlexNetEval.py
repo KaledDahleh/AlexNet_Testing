@@ -58,10 +58,10 @@ with torch.inference_mode():
         topProb, correspondingClass = torch.max(probabilities, dim = 0) # retrieve the highest probability score and its class
 
         predictedLabel = listOfClassNames[correspondingClass.item()]
-
-        print(f'-----\n{predictedLabel}\nprobability: {topProb*100}%\nfilename: {imageName}')
-
+        
         correctLabel = dictionaryOfClasses[str(correspondingClass.item())][1]
+
+        print(f'-----\n{predictedLabel}\nprobability: {topProb*100}%\nfilename: {imageName}\n correct label {correctLabel}')
 
         if correctLabel == predictedLabel:
             print("CORRECT")
