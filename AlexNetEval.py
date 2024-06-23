@@ -44,8 +44,8 @@ with torch.inference_mode():
         # prepare the image for testing, these are AlexNet's documentation rules
         image = Image.open(imagePath) # open the image
         
-        if image.mode == 'L':  # convert black and white to rgb
-            image = image.convert("RGB")
+        if image.mode != 'RGB':  # convert black and white to rgb
+            image = image.convert('RGB')
 
         image = imageTransformations(image) # transform image to fit AlexNet testing documentation
         image = image.unsqueeze(0) # add an additional layer to the image tensor, batch size, because this is what ImageNet expects [N, C, H, W]
