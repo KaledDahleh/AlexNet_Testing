@@ -1,13 +1,12 @@
 import torch
 import torchvision.models as models
 from PIL import Image
-import os # interact with the os, in our case, specifically files
+import os
 import torch.nn as nn
 import json
 
-classIndexPath = "/Users/kaleddahleh/Desktop/workspace/repos/AlexNet_Testing/imagenet_class_index.json"
 
-# Open and read the file
+classIndexPath = "/Users/kaleddahleh/Desktop/workspace/repos/AlexNet_Testing/imagenet_class_index.json" # this is the map of the 1000 class indices and their corresponding ID and label
 with open(classIndexPath, 'r') as file:
     dictionaryOfClasses = json.load(file)
 
